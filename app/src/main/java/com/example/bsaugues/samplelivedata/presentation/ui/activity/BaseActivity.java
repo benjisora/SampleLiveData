@@ -34,11 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
 
     private void initializeView() {
         setContentView(getLayoutId());
-        initObservers();
     }
 
     @LayoutRes
     abstract int getLayoutId();
 
-    abstract void initObservers();
 }
