@@ -21,12 +21,6 @@ public abstract class BaseFragment extends Fragment {
         super.onAttach(context);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initObservers();
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,6 +31,4 @@ public abstract class BaseFragment extends Fragment {
 
     @LayoutRes
     abstract int getLayoutId();
-
-    abstract void initObservers();
 }
