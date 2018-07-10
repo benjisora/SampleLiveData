@@ -1,47 +1,40 @@
-package com.example.bsaugues.samplelivedata.presentation.presenter;
+package com.example.bsaugues.samplelivedata.presentation.viewmodel;
 
-import android.arch.lifecycle.Lifecycle;
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.OnLifecycleEvent;
-import android.content.Context;
 import android.util.Log;
 
 import com.example.bsaugues.samplelivedata.data.ContentRepository;
-import com.example.bsaugues.samplelivedata.presentation.di.annotation.DIValues;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class NumberListPresenter extends BasePresenter {
+public class NumberListViewModel extends AndroidViewModel {
 
-    private static final String TAG = "NumberListPresenter";
+    private static final String TAG = "NumberListViewModel";
 
     private ContentRepository contentRepository;
     private CompositeDisposable disposables;
     private MutableLiveData<Long> numberListLiveData;
 
     @Inject
-    public NumberListPresenter(@Named(DIValues.FRAGMENT_LIFECYCLE_KEY) Lifecycle lifecycle, Context context, ContentRepository contentRepository) {
-        super(lifecycle, context);
+    public NumberListViewModel(Application application, ContentRepository contentRepository) {
+        super(application);
         this.contentRepository = contentRepository;
         this.disposables = new CompositeDisposable();
         this.numberListLiveData = new MutableLiveData<>();
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    public void onCreate() {
-        Log.d(TAG, "Activity created, event received in " + this);
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void onDestroy() {
+    @Override
+    protected void onCleared() {
         Log.d(TAG, "Activity destroyed, event received in " + this);
         disposables.dispose();
+        super.onCleared();
     }
 
     public void startNumberCount() {
@@ -62,6 +55,7 @@ public class NumberListPresenter extends BasePresenter {
 
                     @Override
                     public void onNext(Long value) {
+                        Log.d(TAG, "value : " + value + "; model: " + this);
                         numberListLiveData.postValue(value);
                     }
                 }));

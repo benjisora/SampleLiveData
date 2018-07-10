@@ -5,14 +5,11 @@ import android.support.annotation.Nullable;
 
 import com.example.bsaugues.samplelivedata.R;
 import com.example.bsaugues.samplelivedata.presentation.navigator.MainNavigator;
-import com.example.bsaugues.samplelivedata.presentation.presenter.MainPresenter;
+import com.example.bsaugues.samplelivedata.presentation.viewmodel.MainViewModel;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity {
-
-    @Inject
-    MainPresenter mainPresenter;
+public class MainActivity extends BaseVMActivity<MainViewModel> {
 
     @Inject
     MainNavigator mainNavigator;
@@ -27,12 +24,17 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    Class<MainViewModel> getViewModelClass() {
+        return MainViewModel.class;
+    }
+
+    @Override
     int getLayoutId() {
         return R.layout.activity_main;
     }
 
     @Override
     void initObservers() {
-        // Activity with no logic, Presenter isn't offering liveData to subscribe to, left empty.
+        //Activity with no logic, Presenter isn't offering liveData to subscribe to, left empty.
     }
 }

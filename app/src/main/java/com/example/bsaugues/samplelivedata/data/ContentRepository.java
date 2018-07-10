@@ -12,6 +12,7 @@ public class ContentRepository {
 
     @Inject
     public ContentRepository() {
+        //Intentionally empty
     }
 
     public Observable<Long> getNumberCountObservable() {
